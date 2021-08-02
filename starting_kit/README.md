@@ -26,8 +26,6 @@ In the **Jupyter Notebook** `tutorial.ipynb` you will learn the following things
 You should clone the whole **metadl** repository first by running the following command in the empty root directory of your project :
 ```
 git clone https://github.com/ebadrian/metadl
-cd metadl
-git checkout neurips2021    # We use the branch `neurips2021`
 ```
 We provide 2 ways of installing the necessary dependencies :
 * [via Conda environment](#set-up-the-environment-with-anaconda)
@@ -41,9 +39,15 @@ You can choose your preferred option and directly jump into the corresponding se
 A script `quick_start.sh` is available and allows to quickly set up a conda environment with all the required modules/packages installed. 
 Make sure you have cloned the metadl repository beforehand. 
 
+Your root directory should look like the following : 
+```
+<root_directory>
+|   metadl
+```
+
 Then, set your current working directory to be in metadl's starting kit folder using the following command :
 ```bash
-cd starting_kit/
+cd metadl/starting_kit/
 ```
 
 Then you can run the `quick_start.sh` script :
@@ -76,14 +80,20 @@ unzip omniglot.zip
 
 ---
 
-If you are new to docker, install docker from https://docs.docker.com/get-started/.
-The following docker image is available to run local tests on your machine. It essentially setups the necessary packages and the Python environment for the competition.
-This command will create a container and run the docker image :
+If you are new to docker, install the docker engine from https://docs.docker.com/get-started/. Make sure that your system is compatible with the version that you install (for linux, this can be found at: https://docs.docker.com/engine/install/).
+Once you have installed docker, you can pull the docker image that we provide for this challenge. This image contains all required packages and the Python environment for the competition. You can use this image to perform local tests on your machine.
+The image can be obtained by running
+```bash
+docker pull ebadrian/metadl:gpu-latest
+```
+This image can then be made into a running container using the following command:
 ```bash
 docker run -it -v "$(pwd):/app/codalab" -p 8888:8888 ebadrian/metadl:gpu-latest
 ```
 The option `-v "$(pwd):/app/codalab"` mounts current directory (`starting_kit/`) as `/app/codalab`.
 If you want to mount other directories on your disk, please replace $(pwd) by your own directory. The option -p 8888:8888 is useful for running a Jupyter notebook tutorial inside Docker.
+This container environment can be exited at any time by pressing Ctrl+D (on Linux) or by typing exit.
+
 
 The Docker image has python=3.6.9 and has installed packages such as tensorflow=2.3.0 and its associated Keras version, CUDA 10.1, cuDNN 7.6.4, etc. If you want to run local test with Nvidia GPU support, please make sure you have installed nvidia-docker and run instead:
 ```bash
